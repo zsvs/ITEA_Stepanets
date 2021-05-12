@@ -1,0 +1,18 @@
+FROM ubuntu:latest
+
+RUN apt-get update
+
+# Crushed when attempting to clone repos from github with errors on certs
+# So I added --reinstall ca-certificates
+RUN apt-get install --reinstall ca-certificates --no-install-recommends --no-install-suggests -y
+
+RUN apt-get install --no-install-recommends --no-install-suggests -y git
+
+# By deffault gets itea-DevOps-base
+ENV GIT_URL="https://github.com/Dgadavin/itea-base-course.git"
+
+
+WORKDIR /data
+VOLUME /data
+
+CMD sh -c "git clone $GIT_URL"

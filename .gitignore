@@ -3,5 +3,8 @@
 # Except GitAliases.sh
 !GitAliases.sh
 
+# Docker output dir for dockerGit homework
+Docker/Docker_OUTPUT
+
 # Ignore vscode
 .vs/

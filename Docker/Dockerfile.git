@@ -1,0 +1,12 @@
+FROM ubuntu:latest
+
+RUN apt-get update
+RUN apt-get install --no-install-recommends --no-install-suggests -y git
+
+ENV GIT_URL http://google.com/
+
+
+WORKDIR /data
+VOLUME /data
+
+CMD sh -c "git pull $GIT_URL > /data/results"

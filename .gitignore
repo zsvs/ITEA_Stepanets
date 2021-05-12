@@ -1,0 +1,7 @@
+# Block all .sh filese
+*.sh
+# Except GitAliases.sh
+!GitAliases.sh
+
+# Ignore vscode
+.vs/

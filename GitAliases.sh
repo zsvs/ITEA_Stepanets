@@ -1,6 +1,4 @@
 #!/bin/sh
-echo Setting up aliases
-echo $PATH
 alias gss="git status"
 alias ga="git add"
 alias gb="git branch"

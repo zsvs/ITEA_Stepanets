@@ -2,6 +2,7 @@
 *.sh
 # Except GitAliases.sh
 !GitAliases.sh
+!entrypoint.sh
 
 # Ignore vscode
 .vs/

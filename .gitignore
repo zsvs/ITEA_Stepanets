@@ -3,6 +3,6 @@
 # Except GitAliases.sh
 !GitAliases.sh
 !entrypoint.sh
-
+!entrypoint_php.sh
 # Ignore vscode
 .vs/

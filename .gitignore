@@ -4,5 +4,6 @@
 !GitAliases.sh
 !entrypoint.sh
 !entrypoint_php.sh
+Docker/Docker_OUTPUT
 # Ignore vscode
 .vs/

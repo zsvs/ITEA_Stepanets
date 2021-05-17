@@ -1,5 +1,4 @@
 #!/usr/bin/bash
-echo Setting up aliases
 alias gss="git status"
 alias ga="git add"
 alias gb="git branch"

@@ -2,6 +2,7 @@
 *.sh
 # Except GitAliases.sh
 !GitAliases.sh
+!entrypoint.sh
 
 # Docker output dir for dockerGit homework
 Docker/Docker_OUTPUT

@@ -70,6 +70,20 @@ http {
 {% endfor %}
 {% endblock %}
 
+{% block server_redirect %}
+{% if item.server_name_redirect is defined %}
+server {
+    listen       {{ listen_port }};
+{% if nginx_listen_ipv6 %}
+    listen       [::]:{{ listen_port }};
+{% endif %}
+    server_name  {{ item.server_name_redirect }};
+    return       301 $scheme://{{ item.server_name.split(' ')[0] }}$request_uri;
+}
+{% endif %}
+{% endblock %}
+
+
 {% block http_includes %}
     include {{ nginx_conf_path }}/*.conf;
 {% if nginx_conf_path != nginx_vhost_path %}

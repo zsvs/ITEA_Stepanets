@@ -10,13 +10,13 @@
   with_items:
     - /config/
   tags:
-    - configs
+    - features-configs
     - folders
 
 - name: include specific vars
-  include_vars: "../../secret.yml"
+  include_vars: "../../../secrets.yml"
   tags:
-    - configs
+    - features-configs
 
 - name: setup configurations
   template:
@@ -29,10 +29,10 @@
     - amazon_s3.yml
     - database.yml
   tags:
-    - configs
+    - features-configs
 
 - name: reload systemd daemon
   systemd:
     daemon-reload: yes
   tags:
-    - configs
+    - features-configs

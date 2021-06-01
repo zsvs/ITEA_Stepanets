@@ -8,11 +8,6 @@
     mode: 0644
   when: nginx_yum_repo_enabled | bool
 
-- name: Ensure nginx is installed.
-  package:
-    name: "{{ nginx_package_name }}"
-    state: present
-
 - name: insall nginx
   yum:
     name:
@@ -23,7 +18,5 @@
 
 - name: Ensure nginx is installed.
   package:
-    name: nginx
+    name: "{{ nginx_package_name }}"
     state: present
-  tags:
-    - nginx-setup

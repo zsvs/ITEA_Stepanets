@@ -1,0 +1,9 @@
+---
+# vars file for nginx-role
+
+root_group: root
+nginx_conf_path: /etc/nginx/conf.d
+nginx_conf_file_path: /etc/nginx/nginx.conf
+nginx_mime_file_path: /etc/nginx/mime.types
+nginx_pidfile: /var/run/nginx.pid
+nginx_user: "nginx"

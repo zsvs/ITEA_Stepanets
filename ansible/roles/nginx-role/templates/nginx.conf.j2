@@ -54,31 +54,19 @@ http {
     {{ nginx_extra_http_options|indent(4, False) }}
 {% endif %}
 
-{% block http_upstream %}
-{% for upstream in nginx_upstreams %}
-    upstream {{ upstream.name }} {
-{% if upstream.strategy is defined %}
-        {{ upstream.strategy }};
-{% endif %}
-{% for server in upstream.servers %}
-        server {{ server }};
-{% endfor %}
-{% if upstream.keepalive is defined %}
-        keepalive {{ upstream.keepalive }};
-{% endif %}
-    }
-{% endfor %}
-{% endblock %}
-
+{% block server %}}
 server {
     listen       {{ listen_port }};
 {% if nginx_listen_ipv6 %}
     listen       [::]:{{ listen_port }};
 {% endif %}
     server_name  {{ nginx_server_name }};
-    return       301 $scheme://{{ nginx_server_name.split(' ')[0] }}$request_uri;
+    location / {
+      root {{ nginx_root_path }};
+      index index.html index.htm;
+    }
 }
-
+{% endblock %}
 
 {% block http_includes %}
     include {{ nginx_conf_path }}/*.conf;

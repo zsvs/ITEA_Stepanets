@@ -46,7 +46,7 @@ http {
       root   {{ nginx_root_path }};
       {% endblock %}
 
-      include /etc/nginx/default.d/*.conf; 
+      #include /etc/nginx/default.d/*.conf; 
 
       #charset koi8-r;
       #access_log  /var/log/nginx/host.access.log  main;
@@ -61,9 +61,19 @@ http {
       }
       {% endblock %}
 
-      {% block location %}
-      location /test {
-        root   {{ nginx_root_path }}/test;
+      location / {
+        root   {{ nginx_root_path }};
+        index  index.html index.htm;
+      }
+
+      {% block location_test %}
+      location /test/ {
+        root   {{ nginx_root_path }};
+        index  index.html index.htm;
+      }
+
+      location = /test {
+        root   {{ nginx_root_path }};
         index  index.html index.htm;
       }
       {% endblock %}

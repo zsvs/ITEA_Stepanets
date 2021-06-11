@@ -7,6 +7,8 @@
     group: "{{ root_group }}"
     mode: 0644
   when: nginx_yum_repo_enabled | bool
+  tags:
+    - nginx-setup
 
 - name: insall nginx
   yum:
@@ -20,3 +22,5 @@
   package:
     name: "{{ nginx_package_name }}"
     state: present
+  tags:
+    - nginx-setup

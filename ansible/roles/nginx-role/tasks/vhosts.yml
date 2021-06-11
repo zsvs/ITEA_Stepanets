@@ -29,7 +29,6 @@
   with_items: "{{ nginx_vhosts }}"
   notify: reload nginx
   tags:
-    - skip_ansible_lint
     - nging-setup
 
 - name: Remove managed vhost config files.
@@ -40,7 +39,6 @@
   with_items: "{{ nginx_vhosts }}"
   notify: reload nginx
   tags:
-    - skip_ansible_lint
     - nginx-setup
 
 - name: Remove legacy vhosts.conf file.

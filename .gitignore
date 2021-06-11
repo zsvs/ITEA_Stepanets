@@ -9,3 +9,6 @@ Docker/Docker_OUTPUT
 
 # Ignore vscode
 .vs/
+
+# Ignore some jinja files
+!nginx1.conf.j2

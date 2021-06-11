@@ -17,9 +17,9 @@
   template:
     src: "{{ nginx_testdir_indexfile }}"
     dest: "{{nginx_root_path}}/test"
-    owner: root
-    group: "{{ root_group }}"
-    mode: 0644
+    owner: "{{ __nginx_user }}"
+    group: "{{ __nginx_user }}"
+    mode: 0664
   tags:
     - nginx-setup
 

@@ -36,9 +36,20 @@
     group: "{{ root_group }}"
     mode: 0644
   notify:
+    - validate nginx configuration
     - reload nginx
   tags:
     - nginx-setup
+
+- name: Create /test location
+  file:
+    path: "{{nginx_root_path}}/test"
+    state: directory
+    mode: '0755'
+  notify:
+    - Copy index.html to /test
+    tags:
+      - nginx-setup
 
 - name: Ensure nginx service is running as configured.
   service:

@@ -43,7 +43,7 @@ Parameters:
 
   LatestAmiId:
     Type:  AWS::EC2::Image::Id
-    Default: "ami-063d4ab14480ac177"
+    Default: "ami-0ec23856b3bad62d3"
     
   LoadBalancerName:
     Type: String
@@ -249,7 +249,7 @@ Resources:
     Type: "AWS::EC2::SecurityGroup"
     Properties:
       GroupName: "LoadBalancer-sg"
-      GroupDescription: Allow http/80 to ELB
+      GroupDescription: Allow http/8080 to ELB
       VpcId: !Ref MyVPC
       SecurityGroupIngress:
         - IpProtocol: tcp

@@ -13,9 +13,18 @@
     - nginx-setup
     - nginx-validate-conf
 
+- name: Copy index.html to /test
+  template:
+    src: "{{ nginx_testdir_indexfile }}"
+    dest: "{{nginx_root_path}}/test"
+    owner: root
+    group: "{{ root_group }}"
+    mode: 0644
+  tags:
+    - nginx-setup
 
 - name: reload nginx
   service: name=nginx state=reloaded
   tags:
-    - nging-restart
+    - nging-reload
     - nginx-setup

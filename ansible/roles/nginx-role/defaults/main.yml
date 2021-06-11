@@ -64,6 +64,8 @@ nginx_listen_ipv6: true
 
 listen_port: "80"
 nginx_server_name: "localhost"
+nginx_testdir_path: "/usr/share/nginx/html/test"
+nginx_testdir_indexfile: "index.html.j2"
 
 nginx_vhosts: []
 # Example vhost below, showing all available options:

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+{% block head %}
+<head>
+  <meta charset="utf-8">
+  <title>{{ nginx_server_name }} test page</title>
+</head>
+{% endblock %}
+{% block body %}
+<body>
+{% block text %}
+  <h1>Hello from test</h1>
+{% endblock %}
+</body>
+{% endblock %}
+</html>

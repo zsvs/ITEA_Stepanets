@@ -1,0 +1,84 @@
+user  {{ nginx_user }};
+
+error_log  {{ nginx_error_log }};
+pid        {{ nginx_pidfile }};
+
+{% block worker %}
+worker_processes  {{ nginx_worker_processes }};
+{% endblock %}
+
+{% if nginx_extra_conf_options %}
+{{ nginx_extra_conf_options }}
+{% endif %}
+
+{% block events %}
+events {
+    worker_connections  {{ nginx_worker_connections }};
+    multi_accept {{ nginx_multi_accept }};
+}
+{% endblock %}
+
+http {
+    {% block http_begin %}{% endblock %}
+
+    {% block http_basic %}
+    include       {{ nginx_mime_file_path }};
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  {{ nginx_access_log }};
+
+    sendfile       {{ nginx_sendfile }};
+    #tcp_nopush     on;
+
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+{% block server %}
+    server {
+      {% block server_settings %}
+      listen       {{ listen_port }};
+      server_name  {{ nginx_server_name }};
+      root   {{ nginx_root_path }};
+      {% endblock %}
+
+      #include /etc/nginx/default.d/*.conf; 
+
+      #charset koi8-r;
+      #access_log  /var/log/nginx/host.access.log  main;
+
+      {% block error_pages %}
+      error_page 404 /404.html;
+      location = /404.html {
+      }
+
+      error_page 500 502 503 504 /50x.html;
+      location = /50x.html {
+      }
+      {% endblock %}
+
+      location / {
+        root   {{ nginx_root_path }};
+        index  index.html index.htm;
+      }
+
+      {% block location_test %}
+      location /test/ {
+        root   {{ nginx_root_path }};
+        index  index.html index.htm;
+      }
+
+      location = /test {
+        root   {{ nginx_root_path }};
+        index  index.html index.htm;
+      }
+      {% endblock %}
+    }
+ {% endblock %}
+
+{% endblock %}
+}

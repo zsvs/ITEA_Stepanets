@@ -9,7 +9,7 @@ node {
 
 	stage('Build image') {
 		sh '''
-		docker build mynginx:${BUILD_ID} -f Dockerfile.nginx .
+		docker build -t mynginx:${BUILD_ID} -f Dockerfile.nginx .
 		'''
 	}
 

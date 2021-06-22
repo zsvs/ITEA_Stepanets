@@ -18,7 +18,7 @@ pipelineJob("docker-nginx-test") {
                               }
                         }
                   }
-        scriptPath("jenkins/Jenkinsfile")
+        scriptPath("Jenkinsfile")
       }
 
     }

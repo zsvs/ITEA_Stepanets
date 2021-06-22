@@ -8,13 +8,15 @@ node {
     }
 
 	stage('Build image') {
-    	  app = docker.build("mynginx:${env.BUILD_ID}", "-e MY_NAME=${MY_NAME}", "-f Dockerfile.nginx .")
+		sh '''
+		docker build mynginx:${env.BUILD_ID} -f Dockerfile.nginx .
+		'''
 	}
 
 	stage('Test image') {
        	  sh '''
        	  if ! docker inspect mynginx:${env.BUILD_ID} &> /dev/null; then
-            echo 'docker-image does not exist!'
+        	echo 'docker-image does not exist!'
             exit 1
        	  fi
        	  '''
@@ -23,15 +25,14 @@ node {
 	stage('Push image') {
     	  echo 'Push image'
 		  sh '''
-		   if [$DOCKER_PUSH == "false"]; then
-		    exit 1
+		  echo 'Push image'
+		   if [$DOCKER_PUSH == "true"]; then
+			 echo "Push image"
+		     docker push mynginx:${env.BUILD_ID}
+		   else
+		     echo "No pushes"
+		   fi
 		  '''
-          app.push("${env.BUILD_NUMBER}")
-          app.push("latest")
-	}
-
-	stage('Clean existing image') {
-  	  sh "docker rmi mynginx"
 	}
 }
 }

@@ -31,7 +31,7 @@ node {
 	}
 
 	stage('Clean existing image') {
-  	  sh "docker rmi docker-image"
+  	  sh "docker rmi mynginx"
 	}
 }
 }

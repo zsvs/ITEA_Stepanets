@@ -22,6 +22,12 @@ node {
        	  '''
 	}
 
+	stage('Run image') {
+       	  sh '''
+			 docker run mynginx:${BUILD_ID} -e MY_NAME=${MY_NAME} -p 44044:44044 --rm
+       	  '''
+	}
+
 	stage('Push image') {
     	  echo 'Push image'
 		  sh '''

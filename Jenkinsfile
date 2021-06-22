@@ -9,13 +9,13 @@ node {
 
 	stage('Build image') {
 		sh '''
-		docker build mynginx:${env.BUILD_ID} -f Dockerfile.nginx .
+		docker build mynginx:${BUILD_ID} -f Dockerfile.nginx .
 		'''
 	}
 
 	stage('Test image') {
        	  sh '''
-       	  if ! docker inspect mynginx:${env.BUILD_ID} &> /dev/null; then
+       	  if ! docker inspect mynginx:${BUILD_ID} &> /dev/null; then
         	echo 'docker-image does not exist!'
             exit 1
        	  fi
@@ -28,7 +28,7 @@ node {
 		  echo 'Push image'
 		   if [$DOCKER_PUSH == "true"]; then
 			 echo "Push image"
-		     docker push mynginx:${env.BUILD_ID}
+		     docker push mynginx:${BUILD_ID}
 		   else
 		     echo "No pushes"
 		   fi

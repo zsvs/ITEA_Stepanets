@@ -21,3 +21,30 @@
     - Common-install
     - Debian-setup
     - RHEL-setup
+
+- name: Make sure we have a 'jenkins' group
+  group:
+    name: jenkins
+    state: present
+  tags:
+    - Debian-setup
+
+- name: Allow 'jenkins' group to have passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%jenkins'
+    line: '%jenkins ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+  tags:
+    - Debian-setup
+
+
+- name: Ensure jenkins is running
+  service:
+    name: jenkins
+    state: started
+  tags:
+    - Common-install
+    - Debian-setup
+    - RHEL-setup

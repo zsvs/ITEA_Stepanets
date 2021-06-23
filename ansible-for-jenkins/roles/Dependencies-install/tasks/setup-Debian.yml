@@ -1,13 +1,9 @@
 ---
-- name: Update apt cache
-  apt: update_cache=yes cache_valid_time=86400
-  changed_when: false
-  tags:
-    - Debian-setup
-
 - name: Update all packages to the latest version
   apt:
     upgrade: full
+  notify:
+    - Update apt cache
   tags:
     - Debian-setup
 
@@ -28,5 +24,42 @@
 - name: Install docker dependencies
   apt: name={{ item }} state=latest update_cache=yes
   loop: ['docker-ce', 'docker-ce-cli', 'containerd.io']
+  notify:
+    - Update apt cache
   tags:
     - Debian-setup
+
+- name: Install JAVA jre/jdk
+  apt: name={{ item }} state=latest update_cache=yes
+  loop: ['default-jre', 'default-jdk']
+  notify:
+    - Update apt cache
+  tags:
+    - Debian-setup
+
+- name: Install wget
+  apt: name=wget state=latest update_cache=yes
+  notify:
+    - Update apt cache
+  tags:
+    - Debian-setup
+
+- name: Add jenkins repo
+  shell:
+    cmd: wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+  tags:
+    - Debian-setup
+
+- name: Add jenkins key 
+  shell:
+    cmd: sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+  notify:
+    - Update apt cache
+  tags:
+    - Debian-setup
+
+- name: Install jenkins 
+  apt: name=jenkins state=latest update_cache=yes
+  tags:
+    - Debian-setup
+

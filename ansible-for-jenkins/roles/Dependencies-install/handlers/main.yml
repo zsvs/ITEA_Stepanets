@@ -1,2 +1,14 @@
 ---
 # handlers file for Dependencies-install
+- name: Update apt cache
+  apt: update_cache=yes
+  changed_when: false
+  tags:
+    - Debian-setup
+
+- name: Update yum cache
+  yum: update_cache=yes
+  changed_when: false
+  tags:
+    - RHEL-setup
+

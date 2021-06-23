@@ -13,14 +13,36 @@
   tags:
     - RHEL-setup
 
-- name: Install yum utils
-  yum: name=yum-utils state=latest update_cache=yes
+- name: Install yum misc
+  yum: name={{ item }} state=latest update_cache=yes
+  loop: ['yum-utils', 'wget']
+  tags:
+    - RHEL-setup
+
+- name: Add jenkins repo
+  shell:
+    cmd: wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
+  tags:
+    - RHEL-setup
+
+- name: Add jenkins key 
+  shell:
+    cmd: rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key
+  notify:
+    - Update yum cache
+  tags:
+    - RHEL-setup
+
+- name: Install yum jenkins
+  yum: name=jenkins state=latest update_cache=yes
+  notify:
+    - Update yum cache
   tags:
     - RHEL-setup
 
 - name: Add Docker Repository
   yum_repository:
-    name: docker-ce-stable
+    name: docker-ce
     description: Docker official repo
     baseurl: https://download.docker.com/linux/centos/docker-ce.repo
     state: present

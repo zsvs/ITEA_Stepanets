@@ -15,7 +15,7 @@ node {
 
 	stage('Run image') {
        	  sh '''
-			sudo docker run -e MY_NAME=${MY_NAME} -p 44044:44044 --rm mynginx:${BUILD_ID}
+			sudo docker run -e MY_NAME=${NAME} -p 44044:44044 --rm mynginx:${BUILD_ID}
        	  '''
 	}
 

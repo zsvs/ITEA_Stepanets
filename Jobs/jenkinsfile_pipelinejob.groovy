@@ -4,7 +4,7 @@ pipelineJob("docker-nginx-test") {
     	}
 
     parameters {
-      stringParam('MY_NAME', 'default', 'Set environment variable')
+      stringParam('NAME', 'default', 'Set environment variable')
 	booleanParam('DOCKER_PUSH', true, 'Push to docker hub')
     }
 

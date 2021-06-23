@@ -1,0 +1,23 @@
+---
+# tasks file for Dependencies-install
+- include_tasks: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+  tags:
+    - Common-install
+    - RHEL-setup
+
+- include_tasks: setup-Debian.yml
+  when: ansible_os_family == 'Debian'
+  tags:
+    - Common-install
+    - Debian-setup
+
+- name: Ensure docker service is running
+  service:
+    name: docker
+    state: started
+    enabled: true
+  tags:
+    - Common-install
+    - Debian-setup
+    - RHEL-setup

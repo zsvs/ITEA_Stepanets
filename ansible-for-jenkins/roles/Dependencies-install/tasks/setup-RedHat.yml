@@ -1,0 +1,34 @@
+---
+
+- name: Update yum cache
+  yum: update_cache=yes
+  changed_when: false
+  tags:
+    - RHEL-setup
+
+- name: Upgrade all packages to the latest version
+  yum:
+    name: '*'
+    state: latest
+  tags:
+    - RHEL-setup
+
+- name: Install yum utils
+  yum: name=yum-utils state=latest update_cache=yes
+  tags:
+    - RHEL-setup
+
+- name: Add Docker Repository
+  yum_repository:
+    name: docker-ce-stable
+    description: Docker official repo
+    baseurl: https://download.docker.com/linux/centos/docker-ce.repo
+    state: present
+  tags:
+    - RHEL-setup
+
+- name: Install docker dependencies
+  yum: name={{ item }} state=latest update_cache=yes
+  loop: ['docker-ce', 'docker-ce-cli', 'containerd.io']
+  tags:
+    - RHEL-setup

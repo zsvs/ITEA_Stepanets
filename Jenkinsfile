@@ -36,7 +36,7 @@ node {
 			 echo "Push image"
 		     docker push mynginx:${BUILD_ID}
 		   else
-		     echo "No pushes"
+		     echo "Image not pushed to DockerHub"
 		   fi
 		  '''
 	}

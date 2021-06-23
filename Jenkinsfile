@@ -13,15 +13,6 @@ node {
 		'''
 	}
 
-	stage('Test image') {
-       	  sh '''
-       	  if ! docker inspect mynginx:${BUILD_ID} &> /dev/null; then
-        	echo 'docker-image does not exist!'
-            exit 1
-       	  fi
-       	  '''
-	}
-
 	stage('Run image') {
        	  sh '''
 			sudo docker run mynginx:${BUILD_ID} -e MY_NAME=${MY_NAME} -p 44044:44044 --rm

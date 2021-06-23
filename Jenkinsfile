@@ -9,7 +9,7 @@ node {
 
 	stage('Build image') {
 		sh '''
-		docker build -t mynginx:${BUILD_ID} -f Dockerfile.nginx .
+		sudo docker build -t mynginx:${BUILD_ID} -f Dockerfile.nginx .
 		'''
 	}
 
@@ -24,7 +24,7 @@ node {
 
 	stage('Run image') {
        	  sh '''
-			 docker run mynginx:${BUILD_ID} -e MY_NAME=${MY_NAME} -p 44044:44044 --rm
+			sudo docker run mynginx:${BUILD_ID} -e MY_NAME=${MY_NAME} -p 44044:44044 --rm
        	  '''
 	}
 
@@ -34,9 +34,9 @@ node {
 		  echo 'Push image'
 		   if [$DOCKER_PUSH == "true"]; then
 			 echo "Push image"
-		     docker push mynginx:${BUILD_ID}
+		     sudo docker push mynginx:${BUILD_ID}
 		   else
-		     echo "Image not pushed to DockerHub"
+		     sudo echo "Image not pushed to DockerHub"
 		   fi
 		  '''
 	}

@@ -1,5 +1,5 @@
 [dev]
-52.48.217.172 ansible_user=ec2-user
-34.254.233.200 ansible_user=ubuntu
+3.249.220.236 ansible_user=ec2-user
+52.19.15.146 ansible_user=ubuntu
 [local]
 127.0.0.1

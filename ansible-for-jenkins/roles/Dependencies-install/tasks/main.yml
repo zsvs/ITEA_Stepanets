@@ -39,7 +39,6 @@
   tags:
     - Debian-setup
 
-
 - name: Ensure jenkins is running
   service:
     name: jenkins

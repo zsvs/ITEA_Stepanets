@@ -7,6 +7,11 @@
   tags:
     - Debian-setup
 
+- name: Install git
+  apt: name=git state=latest update_cache=yes
+  tags:
+    - Debian-setup
+
 - name: Add Docker GPG apt Key
   apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
@@ -24,29 +29,25 @@
 - name: Install docker dependencies
   apt: name={{ item }} state=latest update_cache=yes
   loop: ['docker-ce', 'docker-ce-cli', 'containerd.io']
-  notify:
-    - Update apt cache
   tags:
     - Debian-setup
 
 - name: Install JAVA jre/jdk
   apt: name={{ item }} state=latest update_cache=yes
   loop: ['default-jre', 'default-jdk']
-  notify:
-    - Update apt cache
   tags:
     - Debian-setup
 
 - name: Install wget
   apt: name=wget state=latest update_cache=yes
-  notify:
-    - Update apt cache
   tags:
     - Debian-setup
 
 - name: Add jenkins repo
   shell:
     cmd: wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+  notify:
+    - Update apt cache
   tags:
     - Debian-setup
 

@@ -19,6 +19,11 @@
   tags:
     - RHEL-setup
 
+- name: Install git
+  yum: name=git state=latest update_cache=yes
+  tags:
+    - Debian-setup
+
 - name: Add jenkins repo
   shell:
     cmd: wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
@@ -35,14 +40,14 @@
 
 - name: Install yum jenkins
   yum: name=jenkins state=latest update_cache=yes
-  notify:
-    - Update yum cache
   tags:
     - RHEL-setup
 
 - name: Add Docker Repository
   shell:
     cmd: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  notify:
+    - Update yum cache
   tags:
     - RHEL-setup
 

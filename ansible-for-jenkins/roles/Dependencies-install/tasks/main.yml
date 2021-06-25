@@ -1,5 +1,12 @@
 ---
 # tasks file for Dependencies-install
+- name: include specific vars
+  include_vars: "../../../secrets.yml"
+  tags:
+    - Common-install
+    - RHEL-setup
+    - Debian-setup
+
 - include_tasks: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
   tags:
@@ -22,12 +29,24 @@
     - Debian-setup
     - RHEL-setup
 
+- name: Docker login
+  docker_login: 
+    registry: docker.io
+    username: {{ DockerHub_username }}
+    password: {{ docker_pass }}
+  tags:
+    - Common-install
+    - Debian-setup
+    - RHEL-setup
+
 - name: Make sure we have a 'jenkins' group
   group:
     name: jenkins
     state: present
   tags:
+    - Common-install
     - Debian-setup
+    - RHEL-setup
 
 - name: Allow 'jenkins' group to have passwordless sudo
   lineinfile:
@@ -37,7 +56,9 @@
     line: '%jenkins ALL=(ALL) NOPASSWD: ALL'
     validate: 'visudo -cf %s'
   tags:
+    - Common-install
     - Debian-setup
+    - RHEL-setup
 
 - name: Ensure jenkins is running
   service:

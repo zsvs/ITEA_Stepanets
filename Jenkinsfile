@@ -32,7 +32,7 @@ node {
 		   if ${DOCKER_PUSH} == true
 		    then
 			 echo "Push image"
-		     sudo docker push mynginx:${BUILD_ID}
+		     sudo docker push ghostsvsghost/mynginx:${BUILD_ID}
 		    else
 		     echo "Image not pushed to DockerHub"
 		   fi

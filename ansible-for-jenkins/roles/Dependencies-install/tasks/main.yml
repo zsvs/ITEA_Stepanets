@@ -32,8 +32,8 @@
 - name: Docker login
   docker_login: 
     registry: docker.io
-    username: {{ DockerHub_username }}
-    password: {{ docker_pass }}
+    username: "{{ DockerHub_username }}"
+    password: "{{ docker_pass }}"
   tags:
     - Common-install
     - Debian-setup

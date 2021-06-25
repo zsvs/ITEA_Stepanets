@@ -13,9 +13,12 @@ node {
 		'''
 	}
 
-	stage('Run image') {
+	stage('Test image') {
        	  sh '''
-			sudo docker run -e MY_NAME=${NAME} -p 44044:44044 --rm mynginx:${BUILD_ID}
+       	  if ! docker inspect mynginx:${BUILD_ID} &> /dev/null; then
+            echo "mynginx:${BUILD_ID} does not exist!"
+            exit 1
+       	  fi
        	  '''
 	}
 
@@ -23,10 +26,11 @@ node {
     	  echo 'Push image'
 		  sh '''
 		  echo 'Push image'
-		   if [$DOCKER_PUSH == "true"]; then
+		   if ${DOCKER_PUSH} == true
+		    then
 			 echo "Push image"
 		     sudo docker push mynginx:${BUILD_ID}
-		   else
+		    else
 		     echo "Image not pushed to DockerHub"
 		   fi
 		  '''

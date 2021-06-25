@@ -63,4 +63,3 @@
   apt: name=jenkins state=latest update_cache=yes
   tags:
     - Debian-setup
-

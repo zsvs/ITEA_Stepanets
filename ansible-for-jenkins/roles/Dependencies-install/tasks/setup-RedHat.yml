@@ -22,7 +22,7 @@
 - name: Install git
   yum: name=git state=latest update_cache=yes
   tags:
-    - Debian-setup
+    - RHEL-setup
 
 - name: Add jenkins repo
   shell:

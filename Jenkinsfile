@@ -15,8 +15,8 @@ node {
 
 	stage('Test image') {
        	  sh '''
-       	  if ! docker inspect mynginx:${BUILD_ID} &> /dev/null; then
-            echo "mynginx:${BUILD_ID} does not exist!"
+       	  if ! docker inspect mynginx &> /dev/null; then
+            echo "mynginx does not exist!"
             exit 1
        	  fi
        	  '''

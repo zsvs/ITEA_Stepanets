@@ -41,11 +41,8 @@
     - RHEL-setup
 
 - name: Add Docker Repository
-  yum_repository:
-    name: docker-ce
-    description: Docker official repo
-    baseurl: https://download.docker.com/linux/centos/docker-ce.repo
-    state: present
+  shell:
+    cmd: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
   tags:
     - RHEL-setup
 

@@ -15,7 +15,10 @@ node {
 
 	stage('Test image') {
        	  sh '''
-       	  if ! sudo docker inspect mynginx:${BUILD_ID} &> /dev/null; then
+       	  if sudo docker inspect mynginx:${BUILD_ID}; 
+		   then
+		     echo "Image OK"
+		   else
             echo "mynginx does not exist!"
             exit 1
        	  fi

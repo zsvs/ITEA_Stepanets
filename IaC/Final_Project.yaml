@@ -246,7 +246,7 @@ Resources:
     Type: AWS::EC2::Instance
     Properties:
       InstanceType: !Ref InstanceType
-      SecurityGroupIds: [!Ref WebServersSecurityGroup]
+      SecurityGroupIds: [!Ref BastionSecurityGroup]
       KeyName: !Ref 'KeyName'
       ImageId: !Ref 'LatestAmiId'
       SubnetId: !Ref PublicSubnet1
@@ -315,7 +315,7 @@ Resources:
     Type: "AWS::ElasticLoadBalancingV2::Listener"
     Properties:
      DefaultActions:
-       - Type: "fixed-response"
+       - Type: "fixed-response" #! Rewrite to forward configs
          FixedResponseConfig:
            ContentType: "text/plain"
            MessageBody: "Try another URL"
@@ -329,6 +329,7 @@ Resources:
     Properties:
       Actions:
         - Type: forward
+          TargetGroupArn: !Ref TargetGroup1
       Conditions:
         - Field: path-pattern
           PathPatternConfig:
@@ -340,7 +341,7 @@ Resources:
   AutoScalingGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
-      AutoScalingGroupName: Itea Cfn Autoscaling Group
+      AutoScalingGroupName: Final project ASG 
       Cooldown: 120
       DesiredCapacity:
         Ref: DesiredCapacityASG
@@ -352,7 +353,7 @@ Resources:
       Tags:
         -
           Key: Name
-          Value: Garretts Cfn ASG
+          Value: ASG WebServer
           PropagateAtLaunch: 'true'
       VPCZoneIdentifier: 
         - !Ref PrivateSubnet1
@@ -368,14 +369,26 @@ Resources:
       SecurityGroups: [!Ref WebServersSecurityGroup]
       InstanceType:
         Ref: "InstanceType"
-      LaunchConfigurationName: IteaLaunchConfiguration
+      LaunchConfigurationName: FinalProjectLaunchConfiguration
 
 #################### Security Groups Configs #################### 
   WebServersSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupName: "WebServer-sg"
-      GroupDescription: Allow http/https from ELB & enable SSH from home
+      GroupDescription: Allow http from ELB & ssh from bastion
+      VpcId: !Ref MyVPC
+      SecurityGroupIngress:           
+      - IpProtocol: icmp
+        FromPort: -1
+        ToPort: -1
+        CidrIp: !Ref AllowedAddresses
+        
+  BastionSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: "Bastion-sg"
+      GroupDescription: Allow SSH to host
       VpcId: !Ref MyVPC
       SecurityGroupIngress:
       - IpProtocol: tcp
@@ -386,7 +399,15 @@ Resources:
         FromPort: -1
         ToPort: -1
         CidrIp: !Ref AllowedAddresses
-        
+
+  BastionSecurityGroupInboundRule:
+    Type: "AWS::EC2::SecurityGroupIngress"
+    Properties:
+        GroupId: !Ref WebServersSecurityGroup
+        IpProtocol: tcp
+        FromPort: 22
+        ToPort: 22
+        SourceSecurityGroupId: !GetAtt BastionSecurityGroup.GroupId
 
   WebServersSecurityGroupInboundRule:
     Type: "AWS::EC2::SecurityGroupIngress"

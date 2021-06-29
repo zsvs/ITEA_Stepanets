@@ -361,6 +361,7 @@ Resources:
           PropagateAtLaunch: 'true'
         - Key: Ansible
           Value: "true"
+          PropagateAtLaunch: 'true'
       VPCZoneIdentifier: 
         - !Ref PrivateSubnet1
         - !Ref PrivateSubnet2

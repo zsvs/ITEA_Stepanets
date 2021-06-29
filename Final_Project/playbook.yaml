@@ -1,0 +1,4 @@
+- hosts: PrivateServers
+  become: true
+  roles:
+    - FinalProjectNginxInstall

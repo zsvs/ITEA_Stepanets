@@ -291,7 +291,6 @@ Resources:
       Protocol: HTTP
       ProtocolVersion: HTTP1
       HealthCheckPort: 80
-      TargetType: "instance"
       Targets:
         - Id: !Ref EC2Instance01
         - Id: !Ref EC2Instance02
@@ -308,8 +307,8 @@ Resources:
       Scheme: "internet-facing"
       SecurityGroups: [!Ref "ELBSecurityGroupInboundRule"]
       Subnets: 
-        - !Ref PrivateSubnet1
-        - !Ref PrivateSubnet2
+        - !Ref PublicSubnet1
+        - !Ref PublicSubnet2
       Tags: 
         - Key: Name
           Value: ApplicationLoadBalancer

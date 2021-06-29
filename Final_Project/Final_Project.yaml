@@ -265,6 +265,8 @@ Resources:
       Tags:
         - Key: Name
           Value: Private-WebServer-1
+        - Key: Ansible
+          Value: "true"
 
   EC2Instance02:
     Type: AWS::EC2::Instance
@@ -277,6 +279,8 @@ Resources:
       Tags:
         - Key: Name
           Value: Private-WebServer-2
+        - Key: Ansible
+          Value: "true"
 
 #################### ALB Configs #################### 
   TargetGroup1:
@@ -315,11 +319,11 @@ Resources:
     Type: "AWS::ElasticLoadBalancingV2::Listener"
     Properties:
      DefaultActions:
-       - Type: "forward" 
-         TargetGroupArn: !Ref TargetGroup1
-         ForwardConfig:
-           TargetGroups:
-             - TargetGroupArn: !Ref TargetGroup1
+       - Type: "fixed-response"
+         FixedResponseConfig:
+           ContentType: "text/plain"
+           MessageBody: "Try another URL"
+           StatusCode: 200
      LoadBalancerArn: !Ref MyALB
      Port: 80
      Protocol: "HTTP"
@@ -355,6 +359,8 @@ Resources:
           Key: Name
           Value: ASG WebServer
           PropagateAtLaunch: 'true'
+        - Key: Ansible
+          Value: "true"
       VPCZoneIdentifier: 
         - !Ref PrivateSubnet1
         - !Ref PrivateSubnet2

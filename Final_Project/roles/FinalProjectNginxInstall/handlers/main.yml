@@ -1,7 +1,7 @@
 ---
 # handlers file for FinalProjectNginxInstall
 - name: Update yum cache
-  yum: update-cache=yes
+  yum: update_cache=yes
   changed_when: false
   tags:
     - nginx-setup

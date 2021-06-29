@@ -315,11 +315,11 @@ Resources:
     Type: "AWS::ElasticLoadBalancingV2::Listener"
     Properties:
      DefaultActions:
-       - Type: "fixed-response" #! Rewrite to forward configs
-         FixedResponseConfig:
-           ContentType: "text/plain"
-           MessageBody: "Try another URL"
-           StatusCode: 200
+       - Type: "forward" 
+         TargetGroupArn: !Ref TargetGroup1
+         ForwardConfig:
+           TargetGroups:
+             - TargetGroupArn: !Ref TargetGroup1
      LoadBalancerArn: !Ref MyALB
      Port: 80
      Protocol: "HTTP"

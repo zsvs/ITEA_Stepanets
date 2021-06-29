@@ -62,8 +62,8 @@ Parameters:
     Type: String
 
   LatestAmiId:
-    Type:  'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
-    Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
+    Type: String
+    Default: 'ami-0f89681a05a3a9de7'
 
   VpcCIDR:
     Description: Please enter the IP range (CIDR notation) for this VPC
@@ -287,9 +287,10 @@ Resources:
       Protocol: HTTP
       ProtocolVersion: HTTP1
       HealthCheckPort: 80
-      TargetType: "ip"
+      TargetType: "instance"
       Targets:
-        - Id: [!Ref PrivateSubnet1CIDR, !Ref PrivateSubnet2CIDR]
+        - Id: !Ref EC2Instance01
+        - Id: !Ref EC2Instance02
       VpcId: !Ref MyVPC
       Tags: 
         - Key: Name
@@ -356,14 +357,15 @@ Resources:
       VPCZoneIdentifier: 
         - !Ref PrivateSubnet1
         - !Ref PrivateSubnet2
+      TargetGroupARNs: [!Ref TargetGroup1]
+
   LaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
       KeyName:
         Ref: KeyName
       ImageId: !Ref 'LatestAmiId'
-      SecurityGroups:
-        Ref: "WebServersSecurityGroup"
+      SecurityGroups: [!Ref WebServersSecurityGroup]
       InstanceType:
         Ref: "InstanceType"
       LaunchConfigurationName: IteaLaunchConfiguration

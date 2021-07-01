@@ -1,0 +1,5 @@
+[dev]
+3.249.220.236 ansible_user=ec2-user
+52.19.15.146 ansible_user=ubuntu
+[local]
+127.0.0.1

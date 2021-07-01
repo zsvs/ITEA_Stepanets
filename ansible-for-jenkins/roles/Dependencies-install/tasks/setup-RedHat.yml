@@ -1,0 +1,63 @@
+---
+
+- name: Update yum cache
+  yum: update_cache=yes
+  changed_when: false
+  tags:
+    - RHEL-setup
+
+- name: Upgrade all packages to the latest version
+  yum:
+    name: '*'
+    state: latest
+  tags:
+    - RHEL-setup
+
+- name: Install yum misc
+  yum: name={{ item }} state=latest update_cache=yes
+  loop: ['yum-utils', 'wget']
+  tags:
+    - RHEL-setup
+
+- name: Install git
+  yum: name=git state=latest update_cache=yes
+  tags:
+    - RHEL-setup
+
+- name: Install JAVA
+  yum: name=java-1.8.0 state=latest update_cache=yes
+  tags:
+    - RHEL-setup
+    
+- name: Add jenkins repo
+  shell:
+    cmd: wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
+  tags:
+    - RHEL-setup
+
+- name: Add jenkins key 
+  shell:
+    cmd: rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key
+  notify:
+    - Update yum cache
+  tags:
+    - RHEL-setup
+
+- name: Install yum jenkins
+  yum: name=jenkins state=latest update_cache=yes
+  tags:
+    - RHEL-setup
+
+- name: Add Docker Repository
+  shell:
+    cmd: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  notify:
+    - Update yum cache
+  tags:
+    - RHEL-setup
+
+- name: Install docker dependencies
+  yum: name={{ item }} state=latest update_cache=yes
+  loop: ['docker-ce', 'docker-ce-cli', 'containerd.io']
+  tags:
+    - RHEL-setup

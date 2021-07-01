@@ -1,0 +1,65 @@
+---
+- name: Update all packages to the latest version
+  apt:
+    upgrade: full
+  notify:
+    - Update apt cache
+  tags:
+    - Debian-setup
+
+- name: Install git
+  apt: name=git state=latest update_cache=yes
+  tags:
+    - Debian-setup
+
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+  tags:
+    - Debian-setup
+
+- name: Add Docker Repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu bionic stable
+    state: present
+  tags:
+    - Debian-setup
+
+- name: Install docker dependencies
+  apt: name={{ item }} state=latest update_cache=yes
+  loop: ['docker-ce', 'docker-ce-cli', 'containerd.io']
+  tags:
+    - Debian-setup
+
+- name: Install JAVA jre/jdk
+  apt: name={{ item }} state=latest update_cache=yes
+  loop: ['default-jre', 'default-jdk']
+  tags:
+    - Debian-setup
+
+- name: Install wget
+  apt: name=wget state=latest update_cache=yes
+  tags:
+    - Debian-setup
+
+- name: Add jenkins repo
+  shell:
+    cmd: wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+  notify:
+    - Update apt cache
+  tags:
+    - Debian-setup
+
+- name: Add jenkins key 
+  shell:
+    cmd: sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+  notify:
+    - Update apt cache
+  tags:
+    - Debian-setup
+
+- name: Install jenkins 
+  apt: name=jenkins state=latest update_cache=yes
+  tags:
+    - Debian-setup

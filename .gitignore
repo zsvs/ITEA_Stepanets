@@ -1,1 +1,21 @@
-ansible-for-jenkins/hosts*
+
+# Block all .sh filese
+*.sh
+# Except GitAliases.sh
+!GitAliases.sh
+!entrypoint.sh
+
+# Docker output dir for dockerGit homework
+Docker/Docker_OUTPUT
+
+# Ignore vscode
+.vs/
+
+# Ignore some jinja files
+!nginx1.conf.j2
+
+# Ignore hosts invetory file
+!hosts
+
+# Ignore ansible-vault file
+!secrets.yml

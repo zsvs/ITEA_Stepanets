@@ -1,0 +1,8 @@
+---
+{{ env }}:
+  username: {{ service.db.username }}
+  password: {{ db_pass }}
+  database: {{ service.db.db_host }}
+  bucket: {{ service.s3.bucket_name }}
+  redis: {{ service.db.redis_host}}
+  strict: false

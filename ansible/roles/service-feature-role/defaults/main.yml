@@ -1,0 +1,11 @@
+---
+# defaults file for service-faeature-role
+env: prod 
+deploy_user: ec2-user
+service:
+  db:
+    username: "Some_username"
+    db_host: "Some_db_host"
+    redis_host: "Some_redis_host"
+  s3:
+    bucket_name: "Some_bucket_name"

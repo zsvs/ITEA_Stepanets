@@ -1,0 +1,14 @@
+---
+# handlers file for FinalProjectNginxInstall
+- name: Update yum cache
+  yum: update_cache=yes
+  changed_when: false
+  tags:
+    - nginx-setup
+
+- name: Ensure NGINX running
+  service:
+    name: nginx
+    state: started
+  tags:
+    - nginx-setup

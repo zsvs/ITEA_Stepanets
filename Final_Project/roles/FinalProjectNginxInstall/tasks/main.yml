@@ -1,0 +1,32 @@
+---
+# tasks file for FinalProjectNginxInstall
+
+- name: Update yum
+  yum: update_cache=yes
+  changed_when: false
+  tags:
+    - nginx-setup
+
+- name: Upgrade all packages
+  yum:
+    name: '*'
+    state: latest
+  tags:
+    - nginx-setup
+
+- name: Install NGINX
+  shell:
+    cmd: amazon-linux-extras install -y nginx1
+  notify:
+    - Update yum cache
+  tags:
+    - nginx-setup
+
+- name: Start NGINX service
+  service:
+    name: nginx
+    state: started
+  notify:
+    - Ensure NGINX running
+  tags:
+    - nginx-setup

@@ -1,0 +1,12 @@
+[PrivateServers]
+10.0.3.213
+10.0.4.65
+10.0.3.222
+10.0.4.13
+
+[BastionHost]
+52.19.98.79
+
+[PrivateServers:vars]
+ansible_user=ec2-user
+ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q ec2-user@52.19.98.79 -i ~/.ssh/id_rsa_aws"'

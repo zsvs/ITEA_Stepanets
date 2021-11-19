@@ -10,6 +10,6 @@ COPY entrypoint.sh entrypoint.sh
 
 RUN chmod u+x entrypoint.sh
 
-CMD ["./entrypoint.sh"]
-
+ENTRYPOINT ["bash", "-c"]
+CMD [ ". entrypoint.sh" ]
 #EXPOSE 8080

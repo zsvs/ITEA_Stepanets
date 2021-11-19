@@ -7,5 +7,5 @@ then
   search_str="%NM%"
   file="/usr/share/nginx/html/index.html"
   sed -i "s/$search_str/$NAME/gi" $file
-  service nginx start
+  nginx -g "daemon off;"
 fi

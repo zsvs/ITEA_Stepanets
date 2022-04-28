@@ -15,7 +15,7 @@ node {
 
 	stage('Test image') {
        	  sh '''
-       	  if sudo docker inspect mynginx:${BUILD_ID}; 
+       	  if [ sudo docker inspect mynginx:${BUILD_ID} ];
 		   then
 		     echo "Image OK"
 		   else
@@ -29,7 +29,7 @@ node {
     	  echo 'Push image'
 		  sh '''
 		  echo 'Push image'
-		   if ${DOCKER_PUSH} == true
+		   if [ ${DOCKER_PUSH} = true ];
 		    then
 			 echo "Push image"
 		     sudo docker push ghostsvsghost/mynginx:${BUILD_ID}

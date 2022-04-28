@@ -2,7 +2,7 @@ FROM alpine
 
 RUN apk update
 
-RUN apk add git 
+RUN apk add git
 
 # By deffault gets itea-DevOps-base
 ENV GIT_URL="https://github.com/Dgadavin/itea-base-course.git"
